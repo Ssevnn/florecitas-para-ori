@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Orielys 💛 Flores Amarillas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: #fff;
+            position: relative;
+        }
+
+        /* Pétalos flotantes de fondo */
+        .petal {
+            position: absolute;
+            background-color: #ffd700;
+            border-radius: 150% 0 150% 0;
+            animation: floatPetal linear infinite;
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        @keyframes floatPetal {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 25px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.1);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilo del ramo / icono de flor central */
+        .flower-icon {
+            font-size: 80px;
+            margin-bottom: 15px;
+            animation: pulseFlower 2s infinite ease-in-out;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+        }
+
+        @keyframes pulseFlower {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ffe600;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 230, 0, 0.4);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* Botón interactivo */
+        .btn-surprise {
+            background: linear-gradient(45deg, #ffd700, #ffae00);
+            color: #1a1a2e;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-surprise:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(45deg, #ffae00, #ffd700);
+        }
+
+        /* Mensaje secreto oculto inicialmente */
+        .secret-message {
+            margin-top: 25px;
+            color: #fffacd;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.8s ease;
+        }
+
+        .secret-message.visible {
+            opacity: 1;
+            max-height: 200px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor para los pétalos que caen -->
+    <div id="petals-container"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="flower-icon">🌻</div>
+            <h1>Para Orielys 💛</h1>
+            <p>
+                Orielys, quise prepararte este pequeño detalle con flores amarillas porque significas muchísimo para mí. Así como he estado para ti desde el primer día en que nos conocimos, quiero que sepas que seguiré estando ahí en el futuro, apoyándote y celebrando cada uno de tus momentos. 💛
+            </p>
+            <button class="btn-surprise" onclick="revealMessage()">Haz clic aquí 🌻</button>
+            <div id="secret" class="secret-message">
+                "Gracias por cruzarte en mi camino. Eres una niña muy especial y mi apoyo incondicional siempre lo tendrás." ✨
+            </div>
+        </div>
+        <div class="footer">
+            Creado especialmente para ti 💛
+        </div>
+    </div>
+
+    <script>
+        // Función para mostrar el mensaje secreto
+        function revealMessage() {
+            const secret = document.getElementById('secret');
+            secret.classList.toggle('visible');
+            if(secret.classList.contains('visible')) {
+                createBurstPetals();
+            }
+        }
+
+        // Generar pétalos flotantes automáticamente de fondo
+        const container = document.getElementById('petals-container');
+        const petalCount = 25;
+
+        for (let i = 0; i < petalCount; i++) {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            const size = Math.random() * 12 + 8;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size * 1.5}px`;
+            
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animationDuration = `${Math.random() * 5 + 4}s`;
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+            
+            container.appendChild(petal);
+        }
+
+        // Función para estallido extra de pétalos
+        function createBurstPetals() {
+            for (let i = 0; i < 15; i++) {
+                const burst = document.createElement('div');
+                burst.classList.add('petal');
+                const size = Math.random() * 10 + 6;
+                burst.style.width = `${size}px`;
+                burst.style.height = `${size * 1.5}px`;
+                burst.style.left = `50vw`;
+                burst.style.top = `50vh`;
+                burst.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                
+                const randomX = (Math.random() - 0.5) * 400;
+                const randomY = (Math.random() - 0.5) * 400;
+                
+                burst.style.transition = 'all 1s ease-out';
+                container.appendChild(burst);
+                
+                setTimeout(() => {
+                    burst.style.transform = `translate(${randomX}px, ${randomY}px) rotate(720deg)`;
+                    burst.style.opacity = 0;
+                }, 50);
+
+                setTimeout(() => {
+                    burst.remove();
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
